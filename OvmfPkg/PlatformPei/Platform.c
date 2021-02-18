@@ -273,6 +273,15 @@ NoexecDxeInitialization (
 }
 
 VOID
+ConfidentialMigrationInitialization (
+  VOID
+  )
+{
+  UPDATE_BOOLEAN_PCD_FROM_FW_CFG (PcdStartConfidentialMigrationHandler);
+  UPDATE_BOOLEAN_PCD_FROM_FW_CFG (PcdIsConfidentialMigrationTarget);
+}
+
+VOID
 PciExBarInitialization (
   VOID
   )
@@ -742,6 +751,7 @@ InitializePlatform (
 
   InstallClearCacheCallback ();
   AmdSevInitialize ();
+  ConfidentialMigrationInitialization ();
   MiscInitialization ();
   InstallFeatureControlCallback ();
 

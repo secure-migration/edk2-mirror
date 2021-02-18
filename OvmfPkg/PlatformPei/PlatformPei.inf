@@ -89,6 +89,8 @@
   gUefiOvmfPkgTokenSpaceGuid.PcdOvmfDecompressionScratchEnd
   gUefiOvmfPkgTokenSpaceGuid.PcdQ35TsegMbytes
   gUefiOvmfPkgTokenSpaceGuid.PcdQ35SmramAtDefaultSmbase
+  gUefiOvmfPkgTokenSpaceGuid.PcdStartConfidentialMigrationHandler
+  gUefiOvmfPkgTokenSpaceGuid.PcdIsConfidentialMigrationTarget
   gEfiMdePkgTokenSpaceGuid.PcdGuidedExtractHandlerTableAddress
   gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareSize
   gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableSize
