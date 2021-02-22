@@ -1,0 +1,35 @@
+## @file
+#  PEI support for confidential migration.
+#
+#  Copyright (C) 2021 IBM Corporation.
+#
+#  SPDX-License-Identifier: BSD-2-Clause-Patent
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = ConfidentialMigration
+  FILE_GUID                      = a747792e-71a1-4c24-84a9-a76a0a279878
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = InitializeConfidentialMigrationPei
+
+[Sources]
+  ConfidentialMigrationPei.c
+
+[Packages]
+  OvmfPkg/OvmfPkg.dec
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  HobLib
+  PeimEntryPoint
+  PcdLib
+
+[FixedPcd]
+  gUefiOvmfPkgTokenSpaceGuid.PcdConfidentialMigrationMailboxBase
+  gUefiOvmfPkgTokenSpaceGuid.PcdConfidentialMigrationMailboxSize
+
+[Depex]
+  TRUE

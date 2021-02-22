@@ -623,6 +623,7 @@
   UefiCpuPkg/Universal/Acpi/S3Resume2Pei/S3Resume2Pei.inf
   UefiCpuPkg/CpuMpPei/CpuMpPei.inf
   OvmfPkg/AmdSev/SecretPei/SecretPei.inf
+  OvmfPkg/AmdSev/ConfidentialMigration/ConfidentialMigrationPei.inf
 
 !if $(TPM_ENABLE) == TRUE
   OvmfPkg/Tcg/TpmMmioSevDecryptPei/TpmMmioSevDecryptPei.inf

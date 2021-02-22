@@ -331,6 +331,11 @@
   gUefiOvmfPkgTokenSpaceGuid.PcdQemuHashTableBase|0x0|UINT32|0x47
   gUefiOvmfPkgTokenSpaceGuid.PcdQemuHashTableSize|0x0|UINT32|0x48
 
+  ## Area used by the confidential migration handler to communicate with
+  # the hypervisor.
+  gUefiOvmfPkgTokenSpaceGuid.PcdConfidentialMigrationMailboxBase|0x0|UINT32|0x4b
+  gUefiOvmfPkgTokenSpaceGuid.PcdConfidentialMigrationMailboxSize|0x0|UINT32|0x4c
+
 [PcdsDynamic, PcdsDynamicEx]
   gUefiOvmfPkgTokenSpaceGuid.PcdEmuVariableEvent|0|UINT64|2
   gUefiOvmfPkgTokenSpaceGuid.PcdOvmfFlashVariablesEnable|FALSE|BOOLEAN|0x10
