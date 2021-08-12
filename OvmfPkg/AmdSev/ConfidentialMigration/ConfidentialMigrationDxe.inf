@@ -15,6 +15,7 @@
 
 [Sources]
   ConfidentialMigrationDxe.c
+  VirtualMemory.h
 
 [Packages]
   MdePkg/MdePkg.dec
