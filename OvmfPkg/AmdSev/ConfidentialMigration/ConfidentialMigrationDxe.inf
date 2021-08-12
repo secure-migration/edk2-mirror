@@ -29,6 +29,7 @@
 [Pcd]
   gUefiOvmfPkgTokenSpaceGuid.PcdIsConfidentialMigrationTarget
   gUefiOvmfPkgTokenSpaceGuid.PcdStartConfidentialMigrationHandler
+  gUefiOvmfPkgTokenSpaceGuid.PcdConfidentialMigrationMailboxBase
 
 [Depex]
   TRUE
