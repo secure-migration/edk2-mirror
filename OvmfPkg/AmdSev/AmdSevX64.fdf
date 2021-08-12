@@ -274,6 +274,7 @@ INF  OvmfPkg/LinuxInitrdDynamicShellCommand/LinuxInitrdDynamicShellCommand.inf
 !endif
 INF OvmfPkg/AmdSev/SecretDxe/SecretDxe.inf
 INF  OvmfPkg/AmdSev/Grub/Grub.inf
+INF OvmfPkg/AmdSev/ConfidentialMigration/ConfidentialMigrationDxe.inf
 !if $(BUILD_SHELL) == TRUE
 INF  ShellPkg/Application/Shell/Shell.inf
 !endif

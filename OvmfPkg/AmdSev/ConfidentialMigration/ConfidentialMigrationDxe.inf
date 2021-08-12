@@ -1,0 +1,34 @@
+## @file
+#
+#  Copyright (C) 2021 IBM Corporation.
+#  SPDX-License-Identifier: BSD-2-Clause-Patent
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = ConfidentialMigration
+  FILE_GUID                      = 5c2978f4-f175-434b-9e6c-9b03bd7e346f
+  MODULE_TYPE                    = DXE_RUNTIME_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = SetupMigrationHandler
+
+[Sources]
+  ConfidentialMigrationDxe.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  OvmfPkg/OvmfPkg.dec
+
+[LibraryClasses]
+  DebugLib
+  MemoryAllocationLib
+  UefiDriverEntryPoint
+  UefiLib
+
+[Pcd]
+  gUefiOvmfPkgTokenSpaceGuid.PcdIsConfidentialMigrationTarget
+  gUefiOvmfPkgTokenSpaceGuid.PcdStartConfidentialMigrationHandler
+
+[Depex]
+  TRUE

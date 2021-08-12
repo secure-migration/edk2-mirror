@@ -790,6 +790,7 @@
 !endif
   OvmfPkg/AmdSev/SecretDxe/SecretDxe.inf
   OvmfPkg/AmdSev/Grub/Grub.inf
+  OvmfPkg/AmdSev/ConfidentialMigration/ConfidentialMigrationDxe.inf
 !if $(BUILD_SHELL) == TRUE
   ShellPkg/Application/Shell/Shell.inf {
     <LibraryClasses>
