@@ -336,6 +336,9 @@
   gUefiOvmfPkgTokenSpaceGuid.PcdConfidentialMigrationMailboxBase|0x0|UINT32|0x4b
   gUefiOvmfPkgTokenSpaceGuid.PcdConfidentialMigrationMailboxSize|0x0|UINT32|0x4c
 
+  gUefiOvmfPkgTokenSpaceGuid.PcdConfidentialMigrationEntryBase|0x0|UINT32|0x4d
+  gUefiOvmfPkgTokenSpaceGuid.PcdConfidentialMigrationEntrySize|0x0|UINT32|0x4e
+
 [PcdsDynamic, PcdsDynamicEx]
   gUefiOvmfPkgTokenSpaceGuid.PcdEmuVariableEvent|0|UINT64|2
   gUefiOvmfPkgTokenSpaceGuid.PcdOvmfFlashVariablesEnable|FALSE|BOOLEAN|0x10

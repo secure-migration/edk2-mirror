@@ -39,9 +39,21 @@ typedef volatile struct {
 } MH_COMMAND_PARAMETERS;
 
 //
+// Addresses to be used in the entry point
+//
+typedef struct {
+  UINT32 Cr3;
+  UINT64 StackBase;
+  UINT64 MhBase;
+} ENTRY_ADDRS;
+
+//
 // Offset for non-cbit mapping.
 //
 #define UNENC_VIRT_ADDR_BASE    0xffffff8000000000ULL
+
+void MigrationHandlerEntryPoint(void);
+void MigrationHandlerEntryPoint64(void);
 
 STATIC PAGE_TABLE_POOL   *mPageTablePool = NULL;
 PHYSICAL_ADDRESS  mMigrationHandlerPageTables = 0;
@@ -193,6 +205,16 @@ SetupMigrationHandler (
   IN EFI_SYSTEM_TABLE     *SystemTable
   )
 {
+  UINT32            LongModeOffset;
+  UINT32            EntryAddrsOffset;
+  UINT32            GdtOffset;
+  IA32_DESCRIPTOR   GdtPtr;
+  UINT64            EntryPoint;
+  ENTRY_ADDRS       *EntryData;
+
+  LongModeOffset = 0x200;
+  EntryAddrsOffset = 0x400;
+  GdtOffset = 0x600;
 
   if (!PcdGetBool(PcdStartConfidentialMigrationHandler)) {
     return 0;
@@ -204,6 +226,32 @@ SetupMigrationHandler (
   mMigrationHandlerStackBase = (UINTN)AllocateAlignedRuntimePages (mMigrationHandlerStackSize, PAGE_TABLE_POOL_ALIGNMENT);
 
 	PrepareMigrationHandlerPageTables ();
+
+  //
+  // Copy Migration Handler entry point to a known location.
+  //
+  EntryPoint = PcdGet32 (PcdConfidentialMigrationEntryBase);
+  CopyMem ((void *)EntryPoint, MigrationHandlerEntryPoint, 0x50);
+
+  CopyMem ((void *)(EntryPoint + LongModeOffset),
+      MigrationHandlerEntryPoint64, 0x50);
+
+  //
+  // Copy Migration Handler GDT to a known location.
+  //
+  AsmReadGdtr (&GdtPtr);
+  CopyMem ((void *)(EntryPoint + GdtOffset), (void *)GdtPtr.Base,
+      GdtPtr.Limit);
+
+  //
+  // Populate entry point with address of page tables, stack,
+  // and MigrationHandlerMain
+  //
+  EntryData = (void *)(EntryPoint + EntryAddrsOffset);
+
+  EntryData->Cr3 = mMigrationHandlerPageTables;
+  EntryData->StackBase = mMigrationHandlerStackBase;
+  EntryData->MhBase = (UINT64)MigrationHandlerMain;
 
   //
   // If VM is migration target, wait until hypervisor modifies CPU state

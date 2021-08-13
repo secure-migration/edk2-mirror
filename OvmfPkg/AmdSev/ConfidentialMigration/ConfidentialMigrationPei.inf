@@ -30,6 +30,8 @@
 [FixedPcd]
   gUefiOvmfPkgTokenSpaceGuid.PcdConfidentialMigrationMailboxBase
   gUefiOvmfPkgTokenSpaceGuid.PcdConfidentialMigrationMailboxSize
+  gUefiOvmfPkgTokenSpaceGuid.PcdConfidentialMigrationEntryBase
+  gUefiOvmfPkgTokenSpaceGuid.PcdConfidentialMigrationEntrySize
 
 [Depex]
   TRUE

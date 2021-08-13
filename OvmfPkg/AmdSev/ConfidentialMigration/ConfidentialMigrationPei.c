@@ -21,5 +21,11 @@ InitializeConfidentialMigrationPei (
     EfiRuntimeServicesData
     );
 
+  BuildMemoryAllocationHob (
+    PcdGet32 (PcdConfidentialMigrationEntryBase),
+    PcdGet32 (PcdConfidentialMigrationEntrySize),
+    EfiRuntimeServicesData
+    );
+
   return EFI_SUCCESS;
 }

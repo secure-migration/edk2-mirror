@@ -16,6 +16,7 @@
 [Sources]
   ConfidentialMigrationDxe.c
   VirtualMemory.h
+  MigrationEntryPoint.nasm
 
 [Packages]
   MdePkg/MdePkg.dec
@@ -31,6 +32,7 @@
   gUefiOvmfPkgTokenSpaceGuid.PcdIsConfidentialMigrationTarget
   gUefiOvmfPkgTokenSpaceGuid.PcdStartConfidentialMigrationHandler
   gUefiOvmfPkgTokenSpaceGuid.PcdConfidentialMigrationMailboxBase
+  gUefiOvmfPkgTokenSpaceGuid.PcdConfidentialMigrationEntryBase
 
 [Depex]
   TRUE
