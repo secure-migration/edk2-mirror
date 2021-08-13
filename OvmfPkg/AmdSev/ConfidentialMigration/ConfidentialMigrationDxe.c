@@ -109,6 +109,9 @@ EFIAPI
 MigrationHandlerMain ()
 {
   UINT64                       MailboxStart;
+  UINT64                       MailboxEnd;
+  UINT64                       PagetableStart;
+  UINT64                       PagetableEnd;
   MH_COMMAND_PARAMETERS        *Params;
   VOID                         *PageVa;
 
@@ -117,6 +120,11 @@ MigrationHandlerMain ()
   MailboxStart = PcdGet32 (PcdConfidentialMigrationMailboxBase);
   Params = (VOID *)(MailboxStart + UNENC_VIRT_ADDR_BASE);
   PageVa = (VOID *)(MailboxStart + UNENC_VIRT_ADDR_BASE + 0x1000);
+
+  MailboxEnd = MailboxStart + 2 * EFI_PAGE_SIZE;
+
+  PagetableStart = mMigrationHandlerPageTables;
+  PagetableEnd = PagetableStart + 11 * EFI_PAGE_SIZE;
 
   DisableInterrupts ();
   Params->Go = 0;
@@ -138,7 +146,14 @@ MigrationHandlerMain ()
       break;
 
     case MH_FUNC_RESTORE_PAGE:
-      CopyMem ((VOID *)Params->Gpa, PageVa, 4096);
+      //
+      // Don't import a page that covers the mailbox or pagetables.
+      //
+      if (!((Params->Gpa >= MailboxStart && Params->Gpa < MailboxEnd) ||
+          (Params->Gpa >= PagetableStart && Params->Gpa < PagetableEnd))) {
+
+        CopyMem ((VOID *)Params->Gpa, PageVa, 4096);
+      }
       Params->Ret = MH_SUCCESS;
       break;
 
