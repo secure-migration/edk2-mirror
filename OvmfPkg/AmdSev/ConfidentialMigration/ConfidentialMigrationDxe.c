@@ -45,6 +45,8 @@ typedef volatile struct {
 
 STATIC PAGE_TABLE_POOL   *mPageTablePool = NULL;
 PHYSICAL_ADDRESS  mMigrationHandlerPageTables = 0;
+PHYSICAL_ADDRESS  mMigrationHandlerStackBase = 0;
+UINT32            mMigrationHandlerStackSize = 4;
 
 /**
   Allocates and fills in custom page tables for Migration Handler.
@@ -112,6 +114,8 @@ MigrationHandlerMain ()
   UINT64                       MailboxEnd;
   UINT64                       PagetableStart;
   UINT64                       PagetableEnd;
+  UINT64                       StackStart;
+  UINT64                       StackEnd;
   MH_COMMAND_PARAMETERS        *Params;
   VOID                         *PageVa;
 
@@ -125,6 +129,9 @@ MigrationHandlerMain ()
 
   PagetableStart = mMigrationHandlerPageTables;
   PagetableEnd = PagetableStart + 11 * EFI_PAGE_SIZE;
+
+  StackStart = mMigrationHandlerStackBase;
+  StackEnd = StackStart + mMigrationHandlerStackSize;
 
   DisableInterrupts ();
   Params->Go = 0;
@@ -147,10 +154,11 @@ MigrationHandlerMain ()
 
     case MH_FUNC_RESTORE_PAGE:
       //
-      // Don't import a page that covers the mailbox or pagetables.
+      // Don't import a page that covers the mailbox, pagetables, or stack.
       //
       if (!((Params->Gpa >= MailboxStart && Params->Gpa < MailboxEnd) ||
-          (Params->Gpa >= PagetableStart && Params->Gpa < PagetableEnd))) {
+          (Params->Gpa >= PagetableStart && Params->Gpa < PagetableEnd) ||
+          (Params->Gpa >= StackStart && Params->Gpa < StackEnd))) {
 
         CopyMem ((VOID *)Params->Gpa, PageVa, 4096);
       }
@@ -189,6 +197,11 @@ SetupMigrationHandler (
   if (!PcdGetBool(PcdStartConfidentialMigrationHandler)) {
     return 0;
   }
+
+  //
+  // Setup stack and pagetables for Migration Handler
+  //
+  mMigrationHandlerStackBase = (UINTN)AllocateAlignedRuntimePages (mMigrationHandlerStackSize, PAGE_TABLE_POOL_ALIGNMENT);
 
 	PrepareMigrationHandlerPageTables ();
 
