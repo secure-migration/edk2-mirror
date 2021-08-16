@@ -49,3 +49,4 @@
   gUefiOvmfPkgTokenSpaceGuid.PcdSevLaunchSecretSize
   gUefiOvmfPkgTokenSpaceGuid.PcdQemuHashTableBase
   gUefiOvmfPkgTokenSpaceGuid.PcdQemuHashTableSize
+  gUefiOvmfPkgTokenSpaceGuid.PcdConfidentialMigrationEntryBase

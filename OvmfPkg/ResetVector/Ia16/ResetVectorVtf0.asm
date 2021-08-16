@@ -87,6 +87,19 @@ sevSecretBlockStart:
 sevSecretBlockEnd:
 
 ;
+; The IP of the migration handler. The hypervisor should start
+; the mirror with this address.
+;
+; GUID = 5c7db037-ab87-4282-b33c-7894f01471ec
+;
+sevMigrationBlockStart:
+    DD      SEV_MIGRATION_ENTRY_IP
+    DW      sevMigrationBlockStart - sevMigrationBlockEnd
+    DB      0x5C, 0x7D, 0xB0, 0x37, 0x87, 0xAB, 0x82, 0x42
+    DB      0xB3, 0x3C, 0x78, 0x94, 0xF0, 0x14, 0x71, 0xEC
+sevMigrationBlockEnd:
+
+;
 ; SEV-ES Processor Reset support
 ;
 ; sevEsResetBlock:
